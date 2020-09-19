@@ -9,6 +9,7 @@ pipeline {
                 stage ("BUILD ALL") {
                     when { expression { params.BUILD_APP == 'all' } }
                     steps {
+                        git 'https://github.com/minhtuan1407/jenkins-final.git'
                         echo 'BUILD NODEJS'
                         sh 'nodejs/build-nodejs.sh'
                         echo 'BUILD PYTHON'
@@ -18,13 +19,15 @@ pipeline {
                 stage ("BUILD NODEJS") {
                     when { expression { params.BUILD_APP == 'nodejs' } }
                     steps {
+                        git 'https://github.com/minhtuan1407/jenkins-final.git'
                         echo 'BUILD NODEJS'
                         sh 'nodejs/build-nodejs.sh'
                     }
                 }
                 stage ("BUILD PYTHON") {
                     when { expression { params.BUILD_APP == 'python' } }
-                    steps {`
+                    steps {
+                        git 'https://github.com/minhtuan1407/jenkins-final.git'
                         echo 'BUILD PYTHON'
                         sh 'python/build-python.sh'
                     }
