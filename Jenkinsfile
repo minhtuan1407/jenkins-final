@@ -70,26 +70,8 @@ pipeline {
             parallel {
                 stage ("REMOVE ALL") {
                     agent { label 'node2' }
-                    when { expression { params.BUILD_APP == 'all' } }
                     steps {
-                        sh 'docker stop nodejs-app'
-                        sh 'docker stop python-app'
-                        sh 'docker system prune'
-                    }
-                }
-                stage ("REMOVE NODEJS") {
-                    agent { label 'node2' }
-                    when { expression { params.BUILD_APP == 'nodejs' } }
-                    steps {
-                        sh 'docker stop nodejs-app'
-                        sh 'docker system prune'
-                    }
-                }
-                stage ("REMOVE PYTHON") {
-                    agent { label 'node2' }
-                    when { expression { params.BUILD_APP == 'python' } }
-                    steps {
-                        sh 'docker stop python-app'
+                        sh 'docker stop $(docker ps -a -q)'
                         sh 'docker system prune'
                     }
                 }
