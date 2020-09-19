@@ -72,8 +72,8 @@ pipeline {
                 stage ("REMOVE ALL") {
                     agent { label 'node2' }
                     steps {
+                        echo 'REMOVE ALL'
                         sh 'docker stop $(docker ps -a -q)'
-                        sh 'docker system prune'
                     }
                 }
             }
@@ -87,8 +87,8 @@ pipeline {
                         echo 'DEPLOY ON NODE 2'
                         sh 'docker pull minhtuan9801/nodejs'
                         sh 'docker pull minhtuan9801/python'
-                        sh 'docker run -d --rm --name nodejs-app -p 3000:3000 minhtuan9801/nodejs'
-                        sh 'docker run -d --rm --name python-app -p 5000:5000 minhtuan9801/python'
+                        sh 'docker run -d --rm --name nodejs-app --net=host minhtuan9801/nodejs'
+                        sh 'docker run -d --rm --name python-app --net=host minhtuan9801/python'
                     }
                 }
                 stage ("DEPLOY NODEJS") {
@@ -97,7 +97,7 @@ pipeline {
                     steps {
                         echo 'DEPLOY NODEJS ON NODE 2'
                         sh 'docker pull minhtuan9801/nodejs'
-                        sh 'docker run -d --rm --name nodejs-app -p 3000:3000 minhtuan9801/nodejs'
+                        sh 'docker run -d --rm --name nodejs-app --net=host minhtuan9801/nodejs'
                     }
                 }
                 stage ("DEPLOY PYTHON") {
@@ -106,7 +106,7 @@ pipeline {
                     steps {
                         echo 'DEPLOY PYTHON ON NODE 2'
                         sh 'docker pull minhtuan9801/python'
-                        sh 'docker run -d --rm --name python-app -p 5000:5000 minhtuan9801/python'
+                        sh 'docker run -d --rm --name python-app --net=host minhtuan9801/python'
                     }
                 }
             }
