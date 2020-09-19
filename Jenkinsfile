@@ -10,6 +10,7 @@ pipeline {
                     when { expression { params.BUILD_APP == 'all' } }
                     steps {
                         git 'https://github.com/minhtuan1407/jenkins-final.git'
+                        sh 'git pull origin master'
                         echo 'BUILD NODEJS'
                         sh 'nodejs/build-nodejs.sh'
                         echo 'BUILD PYTHON'
@@ -84,6 +85,8 @@ pipeline {
                     when { expression { params.BUILD_APP == 'all' } }
                     steps {
                         echo 'DEPLOY ON NODE 2'
+                        sh 'docker pull minhtuan9801/nodejs'
+                        sh 'docker pull minhtuan9801/python'
                         sh 'docker run -d --rm --name nodejs-app -p 3000:3000 minhtuan9801/nodejs'
                         sh 'docker run -d --rm --name python-app -p 5000:5000 minhtuan9801/python'
                     }
@@ -93,6 +96,7 @@ pipeline {
                     when { expression { params.BUILD_APP == 'nodejs' } }
                     steps {
                         echo 'DEPLOY NODEJS ON NODE 2'
+                        sh 'docker pull minhtuan9801/nodejs'
                         sh 'docker run -d --rm --name nodejs-app -p 3000:3000 minhtuan9801/nodejs'
                     }
                 }
@@ -101,6 +105,7 @@ pipeline {
                     when { expression { params.BUILD_APP == 'python' } }
                     steps {
                         echo 'DEPLOY PYTHON ON NODE 2'
+                        sh 'docker pull minhtuan9801/python'
                         sh 'docker run -d --rm --name python-app -p 5000:5000 minhtuan9801/python'
                     }
                 }
