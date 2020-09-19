@@ -72,8 +72,11 @@ pipeline {
                 stage ("REMOVE ALL") {
                     agent { label 'node2' }
                     steps {
-                        //sh 'docker stop $(docker ps -a -q)'
-                        sh 'docker system prune -f'
+                        catchError (buildResult: 'SUCCESS', stageResult: 'FAILURE')
+                        {
+                            sh 'docker stop $(docker ps -a -q)'
+                            sh 'docker system prune -f'
+                        }
                     }
                 }
             }
@@ -102,7 +105,6 @@ pipeline {
                 }
                 stage ("DEPLOY PYTHON") {
                     agent { label 'node2' }
-                    environment { DOCKER_TAG = sh 'bash get-tag-docker.sh' }
                     when { expression { params.BUILD_APP == 'python' } }
                     steps {
                         echo 'DEPLOY PYTHON ON NODE 2'
