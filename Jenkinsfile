@@ -5,8 +5,8 @@ pipeline {
     }
     stages {
         stage("BUILD") {
-        	parallel {
-        		stage ("BUILD ALL") {
+            parallel {
+                stage ("BUILD ALL") {
                     when { expression { params.BUILD_APP == 'all' } }
                     steps {
                         echo 'BUILD NODEJS'
@@ -15,21 +15,21 @@ pipeline {
                         sh 'python/build-python.sh'
                     }
                 }
-        		stage ("BUILD NODEJS") {
+                stage ("BUILD NODEJS") {
                     when { expression { params.BUILD_APP == 'nodejs' } }
                     steps {
                         echo 'BUILD NODEJS'
                         sh 'nodejs/build-nodejs.sh'
                     }
                 }
-        		stage ("BUILD PYTHON") {
+                stage ("BUILD PYTHON") {
                     when { expression { params.BUILD_APP == 'python' } }
-                    steps {
+                    steps {`
                         echo 'BUILD PYTHON'
                         sh 'python/build-python.sh'
                     }
                 }
-        	}
+            }
         }
         stage ("PUSH") {
             parallel {
