@@ -2,6 +2,6 @@ FROM python:alpine3.7
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
-ENV DOCKER_TAG latest
+ENV DOCKER_TAG=latest
 EXPOSE 5000
 CMD python ./index.py
