@@ -7,7 +7,7 @@ pipeline {
         DOCKER_TAG='latest'
     }
     stages {
-        gtage ("GIT REPO") {
+        stage ("GIT REPO") {
             steps {
                git 'https://github.com/minhtuan1407/jenkins-final.git'
                 sh 'git pull origin master'
