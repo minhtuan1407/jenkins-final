@@ -6,7 +6,7 @@ const docker_tag = process.env.DOCKER_TAG || "unknown";
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
-  const msg = `Hello Tuan! Docker tag is ${docker_tag} - Hostname is ${hostname}\n`
+  const msg = `Hello World Tuan! Docker tag is ${docker_tag} - Hostname is ${hostname}\n`
   res.end(msg);
 });
 
