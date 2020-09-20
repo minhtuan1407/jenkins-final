@@ -88,10 +88,8 @@ pipeline {
                     when { expression { params.BUILD_APP == 'all' } }
                     steps {
                         echo 'DEPLOY ON NODE 2'
-                        sh 'docker pull minhtuan9801/nodejs'
-                        sh 'docker pull minhtuan9801/python'
-                        sh 'docker run -d --rm --name nodejs-app --net=host -e DOCKER_TAG=$DOCKER_TAG minhtuan9801/nodejs'
-                        sh 'docker run -d --rm --name python-app --net=host -e DOCKER_TAG=$DOCKER_TAG minhtuan9801/python'
+                        sh './nodejs/deploy-nodejs.sh'
+                        sh './python/deploy-python.sh'
                     }
                 }
                 stage ("DEPLOY NODEJS") {
@@ -99,8 +97,7 @@ pipeline {
                     when { expression { params.BUILD_APP == 'nodejs' } }
                     steps {
                         echo 'DEPLOY NODEJS ON NODE 2'
-                        sh 'docker pull minhtuan9801/nodejs'
-                        sh 'docker run -d --rm --name nodejs-app --net=host -e DOCKER_TAG=$DOCKER_TAG minhtuan9801/nodejs'
+                        sh './nodejs/deploy-nodejs.sh'
                     }
                 }
                 stage ("DEPLOY PYTHON") {
@@ -108,8 +105,7 @@ pipeline {
                     when { expression { params.BUILD_APP == 'python' } }
                     steps {
                         echo 'DEPLOY PYTHON ON NODE 2'
-                        sh 'docker pull minhtuan9801/python'
-                        sh 'docker run -d --rm --name python-app --net=host -e DOCKER_TAG=$DOCKER_TAG minhtuan9801/python'
+                        sh './python/deploy-python.sh'
                     }
                 }
             }
